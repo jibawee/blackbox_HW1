@@ -3,8 +3,8 @@ from credit_card_validator import credit_card_validator
 
 class TestCreditCardValidator(unittest.TestCase):
 
-    # VERIFY vALID CARD NUMBERS WORK
-    # valid visa w prefix 3, length 16, and correct Luhn 
+    """ VERIFY VALID CARD NUMBERS WORK """
+    """ valid visa w prefix 4, length 16, and correct Luhn """
     def test_visa_prefix_4(self):
         self.assertTrue(credit_card_validator("4111111111111111")) 
 
@@ -18,15 +18,16 @@ class TestCreditCardValidator(unittest.TestCase):
         self.assertTrue(credit_card_validator("2221000000000009")) #2221 BUG FOUND
         self.assertTrue(credit_card_validator("2720990000000003")) #2720 BUG FOUND
 
-    # valid american express with prefixes 34 & 37, length 15
+    # valid american express with prefixes 34 & 37, length 15, correct Luhn
     def test_amex_prefix_34_37(self):
         self.assertTrue(credit_card_validator("340000000000009")) #34
         self.assertTrue(credit_card_validator("370000000000002")) #37
 
-    #-----------------------------------------------------------------
+    # -----------------------------------------------------------------
     # BAD PREFIXES FOR ALL CARDS
     def test_invalid_prefixes(self):
         self.assertFalse(credit_card_validator("6011000000000004"))  
+        self.assertFalse(credit_card_validator("7011000000000002")) 
         
     # BAD LENGTH - BOUNDARY VALUE TESTING
     def test_invalid_length(self):
