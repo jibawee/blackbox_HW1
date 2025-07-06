@@ -4,6 +4,11 @@ from credit_card_validator import credit_card_validator
 
 class TestCreditCardValidator(unittest.TestCase):
 
+    # REJECT EMPTY STRING - ERROR GUESSING
+    
+    def test_rejects_empty_string(self):
+        self.assertFalse(credit_card_validator(""))
+
     # VALID PREFIXES AT BOUNDARY
 
     def test_valid_visa_prefix_4(self):
