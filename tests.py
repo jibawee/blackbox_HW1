@@ -3,102 +3,142 @@ from credit_card_validator import credit_card_validator
 
 
 class TestCreditCardValidator(unittest.TestCase):
-    """VALID PREFIXES AT BOUNDARY"""
-    # Testing valid card combinations using boundary value testing for the prefixes
 
-    def test_visa_prefix_4(self):
-        """Valid Visa with prefix 4, length 16, and correct checksum"""
+    # VALID PREFIXES AT BOUNDARY
+
+    def test_valid_visa_prefix_4(self):
+        """Valid Visa with prefix 4, length 16, correct checksum"""
         self.assertTrue(credit_card_validator("4111111111111111"))
 
-    def test_mastercard_prefix_51_55(self):
-        """Valid MasterCards with prefixes 51 & 55, len 16, correct checksum"""
+    def test_valid_mastercard_prefix_51(self):
+        """Valid MasterCard with prefix 51, length 16, correct checksum"""
         self.assertTrue(credit_card_validator("5100000000000004"))
+
+    def test_valid_mastercard_prefix_55(self):
+        """Valid MasterCard with prefix 55, length 16, correct checksum"""
         self.assertTrue(credit_card_validator("5500000000000008"))
 
-    def test_mastercard_prefix_2221_2720(self):
-        """Valid MasterCards with prefixes 2221 & 2720, length 16, correct checksum"""
+    def test_valid_mastercard_prefix_2221(self):
+        """Valid MasterCard with prefix 2221, length 16, correct checksum"""
         self.assertTrue(credit_card_validator("2221000000000009"))
+
+    def test_valid_mastercard_prefix_2720(self):
+        """Valid MasterCard with prefix 2720, length 16, correct checksum"""
         self.assertTrue(credit_card_validator("2720990000000007"))
 
-    def test_amex_prefix_34_37(self):
-        """Valid American Express with prefixes 34 & 37, length 15, correct checksum"""
+    def test_valid_amex_prefix_34(self):
+        """Valid American Express with prefix 34, length 15, correct checksum"""
         self.assertTrue(credit_card_validator("340000000000009"))
+
+    def test_valid_amex_prefix_37(self):
+        """Valid American Express with prefix 37, length 15, correct checksum"""
         self.assertTrue(credit_card_validator("370000000000002"))
 
-    # INVALID PREFIXES NEAR BOUNDARY
-    # Boundary value testing using edge cases for invalid prefixes w/ valid checksum
+    # INVALID PREFIXES NEAR BOUNDARY 
 
-    def test_invalid_prefixes(self):
-        """Edge cases for invalid prefixes with valid checksum"""
-        # Visa edge case for prefix 4
+    def test_invalid_prefix_300(self):
         self.assertFalse(credit_card_validator("3000000000000004"))
-        # Visa & MasterCard edge case/error guess for prefix 4 & 51
+
+    def test_invalid_prefix_500(self):
         self.assertFalse(credit_card_validator("5000000000000009"))
-        # MasterCard edge case for prefix 55
+
+    def test_invalid_prefix_560(self):
         self.assertFalse(credit_card_validator("5600000000000003"))
-        # MasterCard edge case for prefix 2221
+
+    def test_invalid_prefix_2220(self):
         self.assertFalse(credit_card_validator("2220000000000000"))
-        # MasterCard edge case for prefix 2720
+
+    def test_invalid_prefix_2721(self):
         self.assertFalse(credit_card_validator("2721000000000004"))
-        # AmEx edge cases for prefix 34
+
+    def test_invalid_prefix_330(self):
         self.assertFalse(credit_card_validator("330000000000001"))
+
+    def test_invalid_prefix_350(self):
         self.assertFalse(credit_card_validator("350000000000006"))
-        # AmEx edge cases for prefix 37
+
+    def test_invalid_prefix_360(self):
         self.assertFalse(credit_card_validator("360000000000004"))
+
+    def test_invalid_prefix_380(self):
         self.assertFalse(credit_card_validator("380000000000000"))
 
-    # INVALID LENGTH - BOUNDARY VALUE TESTING
-    # Edge case testing/boundary value testing for invalid lengths w/ valid prefixes
+    #  INVALID LENGTH (BAD CHECKSUM) 
 
-    def test_invalid_length(self):
-        """Edge cases for invalid lengths with valid prefixes"""
-        # Visa edge case length 15 (bad checksum)
+    def test_invalid_visa_length_15(self):
         self.assertFalse(credit_card_validator("411111111111111"))
-        # Visa edge case length 17 (bad checksum)
+
+    def test_invalid_visa_length_17(self):
         self.assertFalse(credit_card_validator("41111111111111111"))
-        # MasterCard edge case length 15 (bad checksum)
+
+    def test_invalid_mastercard_length_15(self):
         self.assertFalse(credit_card_validator("550000000000000"))
-        # MasterCard edge case length 17 (bad checksum)
+
+    def test_invalid_mastercard_length_17(self):
         self.assertFalse(credit_card_validator("55000000000000044"))
-        # AmEx edge case length 14 (bad checksum)
+
+    def test_invalid_amex_length_14(self):
         self.assertFalse(credit_card_validator("34000000000003"))
-        # AmEx edge case length 16 (bad checksum)
+
+    def test_invalid_amex_length_16(self):
         self.assertFalse(credit_card_validator("3400000000000009"))
 
-    def test_invalid_length_Luhn(self):
-        """Edge cases for invalid lengths with valid checksum"""
-        # Visa edge case length 15 (valid checksum)
+    #  INVALID LENGTH (VALID CHECKSUM) 
+
+    def test_invalid_visa_length_15_valid_checksum(self):
         self.assertFalse(credit_card_validator("411111111111116"))
-        # Visa edge case length 17 (valid checksum)
+
+    def test_invalid_visa_length_17_valid_checksum(self):
         self.assertFalse(credit_card_validator("41111111111111113"))
-        # MasterCard edge case length 15 (valid checksum)
+
+    def test_invalid_mastercard_length_15_valid_checksum(self):
         self.assertFalse(credit_card_validator("550000000000004"))
-        # MasterCard edge case length 17 (valid checksum)
+
+    def test_invalid_mastercard_length_17_valid_checksum(self):
         self.assertFalse(credit_card_validator("55000000000000046"))
-        # AmEx edge case length 14 (valid checksum)
+
+    def test_invalid_amex_length_14_valid_checksum(self):
         self.assertFalse(credit_card_validator("34000000000000"))
-        # AmEx edge case length 16 (valid checksum)
+
+    def test_invalid_amex_length_16_valid_checksum(self):
         self.assertFalse(credit_card_validator("3400000000000000"))
 
-    # BAD LUHN DIGIT
-    # Edge case testing/boundary value testing for invalid checksum w/ valid prefixes & length
+    #  INVALID CHECKSUM 
 
-    def test_invalid_checksum(self):
-        """Edge cases for invalid checksum with valid prefixes and length"""
-        # Visa (checksum = 2)
+    def test_invalid_visa_checksum_1(self):
         self.assertFalse(credit_card_validator("4000000000000001"))
+
+    def test_invalid_visa_checksum_3(self):
         self.assertFalse(credit_card_validator("4000000000000003"))
-        # MasterCard
+
+    def test_invalid_mastercard_checksum_3(self):
         self.assertFalse(credit_card_validator("5500000000000003"))
+
+    def test_invalid_mastercard_checksum_5(self):
         self.assertFalse(credit_card_validator("5500000000000005"))
+
+    def test_invalid_mastercard_checksum_7(self):
         self.assertFalse(credit_card_validator("5100000000000007"))
+
+    def test_invalid_mastercard_checksum_9(self):
         self.assertFalse(credit_card_validator("5100000000000009"))
+
+    def test_invalid_mastercard_checksum_8(self):
         self.assertFalse(credit_card_validator("2221000000000008"))
+
+    def test_invalid_mastercard_checksum_0(self):
         self.assertFalse(credit_card_validator("2221000000000000"))
+
+    def test_invalid_mastercard_checksum_4(self):
         self.assertFalse(credit_card_validator("2720000000000004"))
+
+    def test_invalid_mastercard_checksum_6(self):
         self.assertFalse(credit_card_validator("2720000000000006"))
-        # AmEx
+
+    def test_invalid_amex_checksum_1(self):
         self.assertFalse(credit_card_validator("340000000000001"))
+
+    def test_invalid_amex_checksum_3(self):
         self.assertFalse(credit_card_validator("370000000000003"))
 
 

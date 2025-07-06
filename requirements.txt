@@ -12,4 +12,3 @@ American Express
 * Must have correct prefixes
 * Must be the correct length
 * Must have correct checksum
-  
