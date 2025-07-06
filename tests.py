@@ -5,10 +5,10 @@ from credit_card_validator import credit_card_validator
 class TestCreditCardValidator(unittest.TestCase):
     # REJECT EMPTY STRING - ERROR GUESSING
 
-    def reject_empty_string(self):
+    def test_reject_empty_string(self):
         self.assertFalse(credit_card_validator(""))
 
-    def letters_in_card_number(self):
+    def test_letters_in_card_number(self):
         self.assertFalse(credit_card_validator("abcd1234efgh5678"))
 
     # VALID PREFIXES AT BOUNDARY
