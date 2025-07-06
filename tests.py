@@ -7,9 +7,12 @@ class TestCreditCardValidator(unittest.TestCase):
 
     def test_reject_empty_string(self):
         self.assertFalse(credit_card_validator(""))
+    
+    def test_rejects_dashes_in_card_number(self):
+        self.assertFalse(credit_card_validator("4111-1111-1111-1111"))
 
-    def test_letters_in_card_number(self):
-        self.assertFalse(credit_card_validator("abcd1234efgh5678"))
+    def test_reject(self):
+        self.assertFalse(credit_card_validator("0000000000000000"))
 
     # VALID PREFIXES AT BOUNDARY
 
