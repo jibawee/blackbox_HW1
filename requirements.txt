@@ -1,0 +1,15 @@
+CREDIT CARD VALIDATOR
+Visa
+* Prefix(es): 4
+* Length: 16
+MasterCard
+* Prefix(es): 51 through 55 and 2221 through 2720 
+* Length: 16
+American Express
+* Prefix(es): 34 and 37
+* Length: 15
+
+* Must have correct prefixes
+* Must be the correct length
+* Must have correct checksum
+  
