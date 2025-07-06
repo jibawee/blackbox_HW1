@@ -34,7 +34,7 @@ class TestCreditCardValidator(unittest.TestCase):
         """Valid American Express with prefix 37, length 15, correct checksum"""
         self.assertTrue(credit_card_validator("370000000000002"))
 
-    # INVALID PREFIXES NEAR BOUNDARY 
+    # INVALID PREFIXES NEAR BOUNDARY
 
     def test_invalid_prefix_300(self):
         self.assertFalse(credit_card_validator("3000000000000004"))
@@ -63,7 +63,7 @@ class TestCreditCardValidator(unittest.TestCase):
     def test_invalid_prefix_380(self):
         self.assertFalse(credit_card_validator("380000000000000"))
 
-    #  INVALID LENGTH (BAD CHECKSUM) 
+    # INVALID LENGTH (BAD CHECKSUM)
 
     def test_invalid_visa_length_15(self):
         self.assertFalse(credit_card_validator("411111111111111"))
@@ -83,7 +83,7 @@ class TestCreditCardValidator(unittest.TestCase):
     def test_invalid_amex_length_16(self):
         self.assertFalse(credit_card_validator("3400000000000009"))
 
-    #  INVALID LENGTH (VALID CHECKSUM) 
+    # INVALID LENGTH (VALID CHECKSUM)
 
     def test_invalid_visa_length_15_valid_checksum(self):
         self.assertFalse(credit_card_validator("411111111111116"))
@@ -103,7 +103,7 @@ class TestCreditCardValidator(unittest.TestCase):
     def test_invalid_amex_length_16_valid_checksum(self):
         self.assertFalse(credit_card_validator("3400000000000000"))
 
-    #  INVALID CHECKSUM 
+    # INVALID CHECKSUM
 
     def test_invalid_visa_checksum_1(self):
         self.assertFalse(credit_card_validator("4000000000000001"))
