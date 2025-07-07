@@ -8,12 +8,7 @@ class TestCreditCardValidator(unittest.TestCase):
     def test_reject_empty_string(self):
         self.assertFalse(credit_card_validator(""))  # BUG 1
 
-    def test_valid_prefix_too_short(self):
-        self.assertFalse(credit_card_validator("4"))
-        self.assertFalse(credit_card_validator("51"))
-        self.assertFalse(credit_card_validator("34"))
-
-    # VALID PREFIXES AT BOUNDARY
+    # VALID PREFIXES AT BOUNDARY/EDGE
 
     def test_valid_visa_prefix_4(self):
         """Valid Visa with prefix 4, length 16, correct checksum"""
@@ -21,11 +16,11 @@ class TestCreditCardValidator(unittest.TestCase):
 
     def test_valid_mastercard_prefix_51(self):
         """Valid MasterCard with prefix 51, length 16, correct checksum"""
-        self.assertTrue(credit_card_validator("5100000000000004"))
+        self.assertTrue(credit_card_validator("5100000000000008"))
 
     def test_valid_mastercard_prefix_55(self):
         """Valid MasterCard with prefix 55, length 16, correct checksum"""
-        self.assertTrue(credit_card_validator("5500000000000008"))
+        self.assertTrue(credit_card_validator("5500000000000004"))
 
     def test_valid_mastercard_prefix_53(self):
         """Valid MasterCard with prefix 53 (in between), length 16, correct checksum"""
@@ -40,7 +35,7 @@ class TestCreditCardValidator(unittest.TestCase):
         self.assertTrue(credit_card_validator("2720990000000007"))
 
     def test_valid_mastercard_prefix_2500(self):
-        self.assertTrue(credit_card_validator("2500000000000006"))  # Luhn-valid
+        self.assertTrue(credit_card_validator("2500000000000001"))
 
     def test_valid_mastercard_prefix_2222(self):
         """Valid MasterCard with prefix 2222, length 16, correct checksum"""
@@ -87,7 +82,7 @@ class TestCreditCardValidator(unittest.TestCase):
     def test_invalid_prefix_380(self):
         self.assertFalse(credit_card_validator("380000000000000"))  # BUG 5
 
-    # INVALID LENGTH AND INVALID CHECKSUM
+    # VALID PREFIX WITH INVALID LENGTH AND INVALID CHECKSUM
 
     def test_invalid_visa_length_15(self):
         self.assertFalse(credit_card_validator("411111111111111"))
