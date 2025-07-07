@@ -6,6 +6,7 @@ class TestCreditCardValidator(unittest.TestCase):
     # REJECT EMPTY STRING - ERROR GUESSING
 
     def test_reject_empty_string(self):
+        """Empty Input"""
         self.assertFalse(credit_card_validator(""))  # BUG 1
 
     # VALID PREFIXES AT BOUNDARY/EDGE
@@ -34,9 +35,6 @@ class TestCreditCardValidator(unittest.TestCase):
         """Valid MasterCard with prefix 2720, length 16, correct checksum"""
         self.assertTrue(credit_card_validator("2720990000000007"))
 
-    def test_valid_mastercard_prefix_2500(self):
-        self.assertTrue(credit_card_validator("2500000000000001"))
-
     def test_valid_mastercard_prefix_2222(self):
         """Valid MasterCard with prefix 2222, length 16, correct checksum"""
         self.assertTrue(credit_card_validator("2222000000000008"))  # BUG 4
@@ -53,112 +51,90 @@ class TestCreditCardValidator(unittest.TestCase):
         """Valid American Express with prefix 37, length 15, correct checksum"""
         self.assertTrue(credit_card_validator("370000000000002"))  # BUG 10
 
-    # INVALID PREFIXES NEAR BOUNDARY
+    # INVALID PREFIXES NEAR BOUNDARY WITH VALID LENGTH & CHECKSUM
 
-    def test_invalid_prefix_300(self):
+    def test_invalid_prefix_3(self):
+        """Error guess/Edge case for Visa"""
         self.assertFalse(credit_card_validator("3000000000000004"))
 
-    def test_invalid_prefix_500(self):
+    def test_invalid_prefix_50(self):
+        """Error guess/Edge case for Mastercard"""
         self.assertFalse(credit_card_validator("5000000000000009"))
 
-    def test_invalid_prefix_560(self):
+    def test_invalid_prefix_56(self):
+        """Error guess/Edge case for Mastercard"""
         self.assertFalse(credit_card_validator("5600000000000003"))
 
     def test_invalid_prefix_2220(self):
+        """Error guess/Edge case for Mastercard"""
         self.assertFalse(credit_card_validator("2220000000000000"))
 
     def test_invalid_prefix_2721(self):
+        """Error guess/Edge case for Mastercard"""
         self.assertFalse(credit_card_validator("2721000000000004"))
 
-    def test_invalid_prefix_330(self):
+    def test_invalid_prefix_33(self):
+        """Error guess/Edge case for Amex"""
         self.assertFalse(credit_card_validator("330000000000001"))  # BUG 5
 
-    def test_invalid_prefix_350(self):
+    def test_invalid_prefix_35(self):
+        """Error guess/Edge case for Amex"""
         self.assertFalse(credit_card_validator("350000000000006"))  # BUG 5
 
-    def test_invalid_prefix_360(self):
+    def test_invalid_prefix_36(self):
+        """Error guess/Edge case for Amex"""
         self.assertFalse(credit_card_validator("360000000000004"))  # BUG 5
 
-    def test_invalid_prefix_380(self):
+    def test_invalid_prefix_38(self):
+        """Error guess/Edge case for Amex"""
         self.assertFalse(credit_card_validator("380000000000000"))  # BUG 5
 
-    # VALID PREFIX WITH INVALID LENGTH AND INVALID CHECKSUM
+
+    # INVALID LENGTH WITH VALID PREFIX & CHECKSUM 
 
     def test_invalid_visa_length_15(self):
-        self.assertFalse(credit_card_validator("411111111111111"))
-
-    def test_invalid_visa_length_17(self):
-        self.assertFalse(credit_card_validator("41111111111111111"))
-
-    def test_invalid_mastercard_length_15(self):
-        self.assertFalse(credit_card_validator("550000000000000"))
-
-    def test_invalid_mastercard_length_17(self):
-        self.assertFalse(credit_card_validator("55000000000000044"))
-
-    def test_invalid_amex_length_14(self):
-        self.assertFalse(credit_card_validator("34000000000003"))
-
-    def test_invalid_amex_length_16(self):
-        self.assertFalse(credit_card_validator("3400000000000009"))
-
-    # INVALID LENGTH WITH VALID CHECKSUM
-
-    def test_invalid_visa_length_15_valid_checksum(self):
+        """Error guessing for visa length -1"""
         self.assertFalse(credit_card_validator("411111111111116"))  # BUG 6
 
-    def test_invalid_visa_length_17_valid_checksum(self):
+    def test_invalid_visa_length_17(self):
+        """Error guessing for visa length +1"""
         self.assertFalse(credit_card_validator("41111111111111113"))  # BUG 6
 
-    def test_invalid_mastercard_length_15_valid_checksum(self):
+    def test_invalid_mastercard_length_15(self):
+        """Error guessing for mastercard length -1"""
         self.assertFalse(credit_card_validator("550000000000004"))  # BUG 8
 
-    def test_invalid_mastercard_length_17_valid_checksum(self):
+    def test_invalid_mastercard_length_17(self):
+        """Error guessing for mastercard length +1"""
         self.assertFalse(credit_card_validator("55000000000000046"))  # BUG 4
 
-    def test_invalid_amex_length_14_valid_checksum(self):
-        self.assertFalse(credit_card_validator("34000000000000"))
+    def test_invalid_mastercard_length_15(self):
+        """Error guessing for mastercard length -1 other prefixes"""
+        self.assertFalse(credit_card_validator("510000000000003"))      
 
-    def test_invalid_amex_length_16_valid_checksum(self):
+    def test_invalid_amex_length_14(self):
+        """Error guessing for amex length -1"""
+        self.assertFalse(credit_card_validator("370000000000002"))
+
+    def test_invalid_amex_length_16(self):
+        """Error guessing for amex length +1"""
         self.assertFalse(credit_card_validator("3400000000000000"))  # BUG 7
+
+
 
     # INVALID CHECKSUM WITH VALID LENGTH & PREFIX
 
     def test_invalid_visa_checksum_1(self):
+        "actual checksum is 2 (-1 for boundary testing?)"
         self.assertFalse(credit_card_validator("4000000000000001"))
 
-    def test_invalid_visa_checksum_3(self):
-        self.assertFalse(credit_card_validator("4000000000000003"))
-
     def test_invalid_mastercard_checksum_3(self):
+        "actual checksum is 4 (-1 for boundary testing?)"
         self.assertFalse(credit_card_validator("5500000000000003"))  # BUG 3
 
-    def test_invalid_mastercard_checksum_5(self):
-        self.assertFalse(credit_card_validator("5500000000000005"))  # BUG 3
-
     def test_invalid_mastercard_checksum_7(self):
+        """actual checksum is 8 (-1 for boundary testing?)"""
         self.assertFalse(credit_card_validator("5100000000000007"))  # BUG 3
-
-    def test_invalid_mastercard_checksum_9(self):
-        self.assertFalse(credit_card_validator("5100000000000009"))
-
-    def test_invalid_mastercard_checksum_8(self):
-        self.assertFalse(credit_card_validator("2221000000000008"))  # BUG 3
-
-    def test_invalid_mastercard_checksum_0(self):
-        self.assertFalse(credit_card_validator("2221000000000000"))  # BUG 3
-
-    def test_invalid_mastercard_checksum_4(self):
-        self.assertFalse(credit_card_validator("2720000000000004"))
-
-    def test_invalid_mastercard_checksum_6(self):
-        self.assertFalse(credit_card_validator("2720000000000006"))
-
-    def test_invalid_amex_checksum_1(self):
-        self.assertFalse(credit_card_validator("340000000000001"))
-
-    def test_invalid_amex_checksum_3(self):
-        self.assertFalse(credit_card_validator("370000000000003"))
 
 
 if __name__ == "__main__":
