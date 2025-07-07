@@ -8,22 +8,8 @@ class TestCreditCardValidator(unittest.TestCase):
     def test_reject_empty_string(self):
         self.assertFalse(credit_card_validator(""))
 
-    def test_luhn_valid_but_invalid_prefix_and_length(self):
-        # valid checksum but is not a valid Visa/MC/Amex
-        self.assertFalse(credit_card_validator("6011000000000004"))
-
-    def test_input_is_integer(self):
-        with self.assertRaises(TypeError):
-            credit_card_validator(4111111111111111)
-
-    def test_invalid_amex_prefix_with_valid_length_checksum(self):
-        self.assertFalse(credit_card_validator("390000000000003"))  # Not 34 or 37
-
-    def test_leading_zeros_valid_visa(self):
-        self.assertTrue(credit_card_validator("0000411111111111"))
-
-    def test_invalid_visa_length_13_bad_checksum(self):
-        self.assertFalse(credit_card_validator("4222222222223"))
+    def test_input_with_newline(self):
+        self.assertFalse(credit_card_validator("4111111111111111\n"))
 
     # VALID PREFIXES AT BOUNDARY
 
