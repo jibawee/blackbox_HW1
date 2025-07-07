@@ -16,6 +16,15 @@ class TestCreditCardValidator(unittest.TestCase):
         with self.assertRaises(TypeError):
             credit_card_validator(4111111111111111)
 
+    def test_invalid_amex_prefix_with_valid_length_checksum(self):
+        self.assertFalse(credit_card_validator("390000000000003"))  # Not 34 or 37
+
+    def test_leading_zeros_valid_visa(self):
+        self.assertTrue(credit_card_validator("0000411111111111"))
+
+    def test_invalid_visa_length_13_bad_checksum(self):
+        self.assertFalse(credit_card_validator("4222222222223"))
+
     # VALID PREFIXES AT BOUNDARY
 
     def test_valid_visa_prefix_4(self):
