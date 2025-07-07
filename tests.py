@@ -12,6 +12,10 @@ class TestCreditCardValidator(unittest.TestCase):
         # valid checksum but is not a valid Visa/MC/Amex
         self.assertFalse(credit_card_validator("6011000000000004"))
 
+    def test_input_is_integer(self):
+        with self.assertRaises(TypeError):
+            credit_card_validator(4111111111111111)
+
     # VALID PREFIXES AT BOUNDARY
 
     def test_valid_visa_prefix_4(self):
