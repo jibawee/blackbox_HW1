@@ -25,6 +25,10 @@ class TestCreditCardValidator(unittest.TestCase):
         """Valid MasterCard with prefix 55, length 16, correct checksum"""
         self.assertTrue(credit_card_validator("5500000000000008"))
 
+    def test_valid_mastercard_prefix_53(self):
+        """Valid MasterCard with prefix 53 (in between), length 16, correct checksum"""
+        self.assertTrue(credit_card_validator("5300000000000006"))
+
     def test_valid_mastercard_prefix_2221(self):
         """Valid MasterCard with prefix 2221, length 16, correct checksum"""
         self.assertTrue(credit_card_validator("2221000000000009"))
@@ -32,6 +36,14 @@ class TestCreditCardValidator(unittest.TestCase):
     def test_valid_mastercard_prefix_2720(self):
         """Valid MasterCard with prefix 2720, length 16, correct checksum"""
         self.assertTrue(credit_card_validator("2720990000000007"))
+
+    def test_valid_mastercard_prefix_2222(self):
+        """Valid MasterCard with prefix 2222, length 16, correct checksum"""
+        self.assertTrue(credit_card_validator("2222000000000008"))
+
+    def test_valid_mastercard_prefix_2719(self):
+        """Valid MasterCard with prefix 2719, length 16, correct checksum"""
+        self.assertTrue(credit_card_validator("2719000000000008"))
 
     def test_valid_amex_prefix_34(self):
         """Valid American Express with prefix 34, length 15, correct checksum"""
