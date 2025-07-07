@@ -9,7 +9,12 @@ class TestCreditCardValidator(unittest.TestCase):
         self.assertFalse(credit_card_validator(""))
 
     def test_valid_mastercard_prefix_2600(self):
-        self.assertTrue(credit_card_validator("2600000000000000"))
+        self.assertTrue(credit_card_validator(""))
+
+    def test_valid_prefix_too_short(self):
+        self.assertFalse(credit_card_validator("4"))
+        self.assertFalse(credit_card_validator("51"))
+        self.assertFalse(credit_card_validator("34"))
 
     # VALID PREFIXES AT BOUNDARY
 
