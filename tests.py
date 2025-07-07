@@ -12,7 +12,7 @@ class TestCreditCardValidator(unittest.TestCase):
 
     def test_number_with_spaces(self):
         self.assertFalse(credit_card_validator("4111 1111 1111 1111"))
-    
+
     def test_non_digit_characters(self):
         self.assertFalse(credit_card_validator("4111a11111111111"))
 
