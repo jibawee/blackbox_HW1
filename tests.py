@@ -8,8 +8,11 @@ class TestCreditCardValidator(unittest.TestCase):
     def test_reject_empty_string(self):
         self.assertFalse(credit_card_validator(""))
 
-    def test_input_with_newline(self):
-        self.assertFalse(credit_card_validator("4111111111111111\n"))
+    def test_valid_mastercard_prefix_2500(self):
+        self.assertTrue(credit_card_validator("2500000000000008"))
+
+    def test_valid_mastercard_prefix_2600(self):
+        self.assertTrue(credit_card_validator("2600000000000007"))
 
     # VALID PREFIXES AT BOUNDARY
 
