@@ -9,6 +9,10 @@ class TestCreditCardValidator(unittest.TestCase):
         """Empty Input"""
         self.assertFalse(credit_card_validator(""))
 
+    def test_reject_empty_string(self):
+        """Empty Input"""
+        self.assertFalse(credit_card_validator(None))
+
     # VALID PREFIXES AT BOUNDARY/EDGE
 
     def test_valid_visa_prefix_4(self):
