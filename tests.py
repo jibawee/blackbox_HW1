@@ -8,6 +8,14 @@ class TestCreditCardValidator(unittest.TestCase):
     def test_reject_empty_string(self):
         self.assertFalse(credit_card_validator(""))
 
+    # WHITESPACE
+
+    def test_number_with_spaces(self):
+        self.assertFalse(credit_card_validator("4111 1111 1111 1111"))
+    
+    def test_non_digit_characters(self):
+        self.assertFalse(credit_card_validator("4111a11111111111"))
+
     # VALID PREFIXES AT BOUNDARY
 
     def test_valid_visa_prefix_4(self):
